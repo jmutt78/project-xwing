@@ -1,28 +1,58 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html manifest="">
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes">
-	<title>ModernApp</title>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes"
+    />
+    <title>ModernApp</title>
+    <!-- <script src="./node_modules/@sencha/ext-modern-runtime/modern.engine.enterprise.js"></script>
+  <link href="./node_modules/@sencha/ext-modern-runtime/material/material-all.css" rel="stylesheet" type="text/css">
+  </link> -->
+    <script
+      type="module"
+      src="./node_modules/@sencha/ext-web-components-modern/ext-web-components-modern.js"
+    ></script>
+    <link
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
-  <script type="text/javascript">
-    var Ext = Ext || {};
-    Ext.beforeLoad = function (tags) {
-      //var s = location.search;
-      var profile;
-      profile = 'desktop';
-      Ext.manifest ='generatedFiles/' + profile;
-    };
-  </script>
+    <script type="text/javascript">
+      var Ext = Ext || {};
+      Ext.beforeLoad = function (tags) {
+        //var s = location.search;
+        var profile;
+        profile = 'desktop';
+        Ext.manifest = 'generatedFiles/' + profile;
+      };
+    </script>
 
-  <!-- The line below must be kept intact for Sencha Cmd to build your application -->
-  <script id="microloader" data-app="1ae111a4-081d-455a-bbf9-1a9bae873579" type="text/javascript" src="generatedFiles/bootstrap.js"></script>
-</head>
+    <!-- The line below must be kept intact for Sencha Cmd to build your application -->
+    <script
+      id="microloader"
+      data-app="1ae111a4-081d-455a-bbf9-1a9bae873579"
+      type="text/javascript"
+      src="generatedFiles/bootstrap.js"
+    ></script>
+  </head>
+
   <body class="launching">
-    <div id="splash" style="margin-top:20%;font-family:Arial;font-size:64px;text-align:center;color:#404040;">
+    <div
+      id="splash"
+      style="
+        margin-top: 20%;
+        font-family: Arial;
+        font-size: 64px;
+        text-align: center;
+        color: #404040;
+      "
+    >
       <div id="theLoadingText">LOADING...</div>
-      <i style="margin:20px;" class="fa fa-spinner fa-spin"></i>
+      <i style="margin: 20px" class="fa fa-spinner fa-spin"></i>
     </div>
   </body>
 </html>
