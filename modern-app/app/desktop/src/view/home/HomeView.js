@@ -88,4 +88,7 @@ Ext.define('ModernApp.view.home.HomeView', {
     `,
 });
 
+//fix the errors when loading the app
+// add it to a basic react app
+// package it up
 //package and handit over to the team
