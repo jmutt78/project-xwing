@@ -1,5 +1,39 @@
-// 2. Define the store
-Ext.create('Ext.data.Store', {
+class MyGrid extends HTMLElement {
+  constructor() {
+    super();
+    const data = this.data;
+
+    const gridContainer = document.createElement('div');
+
+    gridContainer.classList.add('digtix-grid-container');
+
+    gridContainer.innerHTML = `
+     <ext-container padding="10" layout="fit" fitToParent="true" height="100%" width="100%">
+      <ext-grid
+        title="Digtix Test Web Components Grid"
+        store=${data}
+        height="300px"
+        extname="grid"
+        multiColumnSort="true"
+      >
+        <ext-column text="Name" dataIndex="name" flex="1"> </ext-column>
+        <ext-column text="Email" width="200" dataIndex="email"> </ext-column>
+        <ext-column text="Phone" width="150" dataIndex="phone"> </ext-column>
+      </ext-grid>
+    </ext-container>
+    `;
+
+    this.appendChild(gridContainer);
+  }
+
+  get data() {
+    return this.getAttribute('data') || '';
+  }
+}
+
+window.customElements.define('my-grid', MyGrid);
+
+const store = {
   fields: ['name', 'email', 'phone'],
   data: [
     {
@@ -23,58 +57,20 @@ Ext.create('Ext.data.Store', {
       phone: '555-222-1254',
     },
   ],
-  // Named Store
-  storeId: 'peronsStore',
-});
 
-// 3. Define the reusable component with grid
-class MyGrid extends HTMLElement {
-  // When the element is ready...
-  connectedCallback() {
-    // The components html template
-    this.innerHTML = `
-            <ext-grid
-                title="Justin"
-                height="300px"
-                store="peronsStore"
-                scrollable="true"
-                shadow="true">
-                    <ext-column
-                      text="Name"
-                      dataIndex="name"
-                      flex="1">
-                    </ext-column>
-                    <ext-column
-                      text="Email"
-                      width="200"
-                      dataIndex="email">
-                    </ext-column>
-                    <ext-column
-                      text="Phone"
-                      width="150"
-                      dataIndex="phone">
-                    </ext-column>
-            </ext-grid>`;
-
-    let grid = this.querySelector('ext-grid');
-
-    // Workaround for 7.0+
-    grid.ext.rowHeight = null;
-  }
-}
-// 4. Register the component
-window.customElements.define('my-grid', MyGrid);
+  storeId: 'simpsonsStore',
+};
 
 Ext.define('ModernApp.view.home.HomeView', {
   xtype: 'homeview',
   cls: 'homeview',
-  //   controller: { type: 'homeviewcontroller' },
-  //   viewModel: { type: 'homeviewmodel' },
+  controller: { type: 'homeviewcontroller' },
+  viewModel: { type: 'homeviewmodel' },
   requires: [],
   extend: 'Ext.Container',
   scrollable: true,
   height: '500px',
   html: `
-      <my-grid></my-grid>
+      <my-grid data=${JSON.stringify(store)}></my-grid>
     `,
 });
