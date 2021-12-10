@@ -6,4 +6,3 @@ import '../node_modules/@sencha/ext-web-components/src/ext-column.component';
 import '../node_modules/@sencha/ext-web-components/src/ext-container.component';
 // APP
 import './app/desktop/src/view/home/HomeView.js';
-import './app/desktop/src/view/home/MyGrid.js';
