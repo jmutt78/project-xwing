@@ -33,7 +33,7 @@
     "@sencha/ext-modern-theme-material": "~7.4.0",
     "@sencha/ext-web-components-modern": "~7.4.0",
     "@sencha/ext-webpack-plugin": "~7.4.0",
-    "@webcomponents/webcomponentsjs": "^2.4.1",
+    "@webcomponents/webcomponentsjs": "^2.6.0",
     "babel-plugin-transform-html-import-to-string": "^2.0.0"
   },
   "devDependencies": {
