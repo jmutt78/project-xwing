@@ -9,19 +9,13 @@ class MyGrid extends HTMLElement {
 
     gridContainer.innerHTML = `
      <ext-container padding="10" layout="fit" fitToParent="true" height="100%" width="100%">
-        <ext-grid
+      <ext-grid
         title="Digtix Test Web Components Grid"
         store=${data}
         height="300px"
         extname="grid"
         multiColumnSort="true"
       >
-      <ext-toolbar docked="top">
-      <ext-button text="Aaron's button" ui="toolbar-default" ontap="toolbar.buttonHandler"></ext-button>
-      <ext-spacer></ext-spacer>
-      <ext-spacer></ext-spacer>
-      <ext-searchfield ui="faded" placeholder="Search"></ext-searchfield>
-      </ext-toolbar>
       ${cols.fields
         .map(
           (item) => `
@@ -32,7 +26,6 @@ class MyGrid extends HTMLElement {
         )
         .join('')}
       </ext-grid>
-
     </ext-container>
     `;
 
@@ -87,8 +80,3 @@ Ext.define('ModernApp.view.home.HomeView', {
       <my-grid data=${JSON.stringify(store)}></my-grid>
     `,
 });
-
-//fix the errors when loading the app
-// add it to a basic react app
-// package it up
-//package and handit over to the team
