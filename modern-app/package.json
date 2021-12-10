@@ -33,7 +33,7 @@
     "@sencha/ext-modern-theme-material": "~7.4.0",
     "@sencha/ext-web-components-modern": "~7.4.0",
     "@sencha/ext-webpack-plugin": "~7.4.0",
-    "@webcomponents/webcomponentsjs": "^2.6.0",
+    "@webcomponents/webcomponentsjs": "^2.4.1",
     "babel-plugin-transform-html-import-to-string": "^2.0.0"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
     "base-href-webpack-plugin": "~2.0.0",
-    "copy-webpack-plugin": "^5.0.5",
+    "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^5.2.0",
     "html-webpack-plugin": "^3.2.0",
     "lodash.find": "^4.6.0",

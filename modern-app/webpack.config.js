@@ -1,60 +1,75 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const ExtWebpackPlugin = require('@sencha/ext-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const portfinder = require('portfinder');
+const webpack = require('webpack');
 
 module.exports = async function (env) {
-  
   // Utility function for retrieving environment variables
-  function get(it, val) {if(env == undefined) {return val} else if(env[it] == undefined) {return val} else {return env[it]}}
-
-  const rules = [
-    { test: /.(js)$/, use: ['babel-loader'] }
-  ]
-  const resolve = {}
-  const host = '0.0.0.0'
-  const stats = 'none'
-
-  var framework     = get('framework',     'extjs')
-  var contextFolder = get('contextFolder', './')
-  var entryFile     = get('entryFile',     './index.js')
-  var outputFolder  = get('outputFolder',  './')
-  var toolkit       = get('toolkit',       'modern')
-  var theme         = get('theme',         'theme-material')
-  var packages      = get('packages',      ['treegrid'])
-  var script        = get('script',        '')
-  var emit          = get('emit',          'yes')
-  var profile       = get('profile',       '')
-  var environment   = get('environment',   'development')
-  var treeshake     = get('treeshake',     'no')
-  var browser       = get('browser',       'yes')
-  var watch         = get('watch',         'yes')
-  var verbose       = get('verbose',       'no')
-  var cmdopts       = get('cmdopts',     [])
-  var isProd      = false
-  
-  if (environment === 'production' ||
-        (cmdopts.includes('--production') ||
-         cmdopts.includes('--environment=production') ||
-         cmdopts.includes('-e=production') ||
-         cmdopts.includes('-pr'))
-      ) 
-  {
-    browser = 'no'
-    watch = 'no'
-    isProd = true
+  function get(it, val) {
+    if (env == undefined) {
+      return val;
+    } else if (env[it] == undefined) {
+      return val;
+    } else {
+      return env[it];
+    }
   }
 
-  // The build.xml Sencha Cmd plugin uses a regex to locate the webpack bundle for use in app.json to be included in 
+  const rules = [{ test: /.(js)$/, use: ['babel-loader'] }];
+  const resolve = {};
+  const host = '0.0.0.0';
+  const stats = 'none';
+
+  var framework = get('framework', 'extjs');
+  var contextFolder = get('contextFolder', './');
+  var entryFile = get('entryFile', './index.js');
+  var outputFolder = get('outputFolder', './');
+  var toolkit = get('toolkit', 'modern');
+  var theme = get('theme', 'theme-material');
+  var packages = get('packages', ['treegrid']);
+  var script = get('script', '');
+  var emit = get('emit', 'yes');
+  var profile = get('profile', '');
+  var environment = get('environment', 'development');
+  var treeshake = get('treeshake', 'no');
+  var browser = get('browser', 'yes');
+  var watch = get('watch', 'yes');
+  var verbose = get('verbose', 'no');
+  var cmdopts = get('cmdopts', []);
+  var basehref = get('basehref', '/');
+  var isProd = false;
+
+  if (
+    environment === 'production' ||
+    cmdopts.includes('--production') ||
+    cmdopts.includes('--environment=production') ||
+    cmdopts.includes('-e=production') ||
+    cmdopts.includes('-pr')
+  ) {
+    browser = 'no';
+    watch = 'no';
+    isProd = true;
+  }
+
+  // The build.xml Sencha Cmd plugin uses a regex to locate the webpack bundle for use in app.json to be included in
   // the different build environments. For development builds, the file is served in memory.
   // For production builds, the hashed file name is stored as an ant property and added to the build via app.json.
-  const bundleFormat = isProd ? "[name].[hash].js" : "[name].js";
+  const bundleFormat = isProd ? '[name].[hash].js' : '[name].js';
 
-  // Using Live Reload with a root context directory, necessary for Sencha Cmd, requires these folders be ignored 
-  const ignoreFolders = [path.resolve(__dirname, './generatedFiles'), path.resolve(__dirname, './build')]
+  // Using Live Reload with a root context directory, necessary for Sencha Cmd, requires these folders be ignored
+  const ignoreFolders = [
+    path.resolve(__dirname, './generatedFiles'),
+    path.resolve(__dirname, './build'),
+  ];
 
-  portfinder.basePort = (env && env.port) || 1962
-  return portfinder.getPortPromise().then(port => {
+  portfinder.basePort = (env && env.port) || 1962;
+  return portfinder.getPortPromise().then((port) => {
     const plugins = [
+      new HtmlWebpackPlugin({ template: 'index.html', hash: false, inject: 'body' }),
+      new BaseHrefWebpackPlugin({ baseHref: basehref }),
       new ExtWebpackPlugin({
         framework: framework,
         toolkit: toolkit,
@@ -63,27 +78,39 @@ module.exports = async function (env) {
         script: script,
         emit: emit,
         port: port,
-        profile: profile, 
+        profile: profile,
         environment: environment,
         treeshake: treeshake,
         browser: browser,
         watch: watch,
         verbose: verbose,
-        cmdopts: cmdopts
-      })
-    ]
+        cmdopts: cmdopts,
+      }),
+      new CopyWebpackPlugin([
+        {
+          from: './node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
+          to: './webcomponents-bundle.js',
+        },
+      ]),
+      new CopyWebpackPlugin([
+        {
+          from: './node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js.map',
+          to: './webcomponents-bundle.js.map',
+        },
+      ]),
+    ];
     return {
       mode: environment,
-      devtool: (environment === 'development') ? 'inline-source-map' : false,
+      devtool: environment === 'development' ? 'inline-source-map' : false,
       context: path.join(__dirname, contextFolder),
       entry: entryFile,
       output: {
         path: path.join(__dirname, outputFolder),
-        filename: bundleFormat
+        filename: bundleFormat,
       },
       plugins: plugins,
       module: {
-        rules: rules
+        rules: rules,
       },
       resolve: resolve,
       performance: { hints: false },
@@ -92,7 +119,7 @@ module.exports = async function (env) {
       node: false,
       devServer: {
         watchOptions: {
-          ignored: ignoreFolders
+          ignored: ignoreFolders,
         },
         contentBase: [path.resolve(__dirname, outputFolder)],
         watchContentBase: !isProd,
@@ -103,8 +130,8 @@ module.exports = async function (env) {
         disableHostCheck: isProd,
         compress: isProd,
         inline: !isProd,
-        stats: stats
-      }
-    }
-  })
-}
+        stats: stats,
+      },
+    };
+  });
+};

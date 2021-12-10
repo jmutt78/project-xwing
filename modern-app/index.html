@@ -9,20 +9,10 @@
     />
     <title>ModernApp</title>
   </link>
-      <script src="./node_modules/@sencha/ext-modern-runtime/modern.engine.enterprise.js"></script>
-    <script
-      type="module"
-      src="./node_modules/@sencha/ext-web-components-modern/ext-web-components-modern.js"
-    ></script>
+
 
     <script type="text/javascript">
-      function addWebComponents() {
-        var scriptTemp2 = document.createElement('script');
-        scriptTemp2.setAttribute('src', 'webcomponents-bundle.js');
-        document.head.appendChild(scriptTemp2);
-      }
 
-      addWebComponents();
       var Ext = Ext || {};
       Ext.beforeLoad = function (tags) {
         //var s = location.search;
