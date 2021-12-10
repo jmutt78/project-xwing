@@ -12,16 +12,19 @@ class MyGrid extends HTMLElement {
         <ext-grid
         title="Digtix Test Web Components Grid"
         store=${data}
-        height="300px"
+        height="500px"
         extname="grid"
         multiColumnSort="true"
       >
-      <ext-toolbar docked="top">
+      <ext-toolbar docked="top" shadow="false">
       <ext-button text="Aaron's button" ui="toolbar-default"></ext-button>
       <ext-spacer></ext-spacer>
       <ext-spacer></ext-spacer>
       <ext-searchfield ui="faded" placeholder="Search"></ext-searchfield>
       </ext-toolbar>
+              <ext-toolbar docked="bottom">
+        <ext-pagingtoolbar shadow="false"></ext-pagingtoolbar>
+        </ext-toolbar>
       ${cols.fields
         .map(
           (item) => `
@@ -31,6 +34,7 @@ class MyGrid extends HTMLElement {
       `
         )
         .join('')}
+
       </ext-grid>
 
     </ext-container>
