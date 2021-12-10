@@ -2,8 +2,8 @@ class MyGrid extends HTMLElement {
   constructor() {
     super();
     const data = this.data;
-
     const gridContainer = document.createElement('div');
+    const cols = JSON.parse(data);
 
     gridContainer.classList.add('digtix-grid-container');
 
@@ -16,9 +16,15 @@ class MyGrid extends HTMLElement {
         extname="grid"
         multiColumnSort="true"
       >
-        <ext-column text="Name" dataIndex="name" flex="1"> </ext-column>
-        <ext-column text="Email" width="200" dataIndex="email"> </ext-column>
-        <ext-column text="Phone" width="150" dataIndex="phone"> </ext-column>
+      ${cols.fields
+        .map(
+          (item) => `
+      <ext-column text=${
+        item[0].toUpperCase() + item.substring(1)
+      } dataIndex=${item} flex="1"> </ext-column>
+      `
+        )
+        .join('')}
       </ext-grid>
     </ext-container>
     `;
