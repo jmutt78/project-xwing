@@ -6,3 +6,6 @@ Ext._find = require('lodash.find');
 import './node_modules/@sencha/ext-web-components-modern';
 // APP
 // import './app/desktop/src/view/home/HomeView.js';
+// APP
+import './webComponents/DigtixGrid.js';
+import './webComponents/StoreWrapper.js';
